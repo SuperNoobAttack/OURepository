@@ -187,13 +187,13 @@ function initialize_mosaics(responseText) {
         $('#add-rgb-button').click(function(){
             $('#rgb-file-input').trigger('click');
         });
-	
-	        $('#rgb-file-input').change(function(){
+
+        $('#rgb-file-input').change(function(){
             //console.log("number files selected: " + $(this).files.length);
             console.log( this.files );
 
-			if (this.files.length > 0) {
- 				var file = this.files[0];
+            if (this.files.length > 0) {
+                var file = this.files[0];
                 var filename = file.webkitRelativePath || file.fileName || file.name;
 
                 if (!filename.match(/^[a-zA-Z0-9_.-]*$/)) {
@@ -201,14 +201,14 @@ function initialize_mosaics(responseText) {
                 } else {
                     start_upload(file);
                 }
-			}
+            }
         });
 
         $('#add-rgb-button').click(function(){
             $('#rgb-file-input').trigger('click');
         });
-		
-		var rgb_names = [];
+
+        var rgb_names = [];
 
         var mosaic_names = [];
         var mosaic_ids = [];
