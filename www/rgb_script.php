@@ -1,5 +1,6 @@
 <?php 
     $re = '/((\d+\s+\d+\s+\d+)|(\d+.\d+\s+\d+.\d+\s+\d+.\d+))/';
+    //both of these will need to be change to be more dynamicc
     $dataFilePath = "/home/jlongar/ourepository/www/rgb_script_data/GMT_seis.rgb";
     $jsFileLoc = "/home/jlongar/ourepository/www/js/rgb_scripts/GMT_seis.js";
     $str = file_get_contents($dataFilePath);
@@ -15,6 +16,7 @@
         $line = $matches[$i][0];
         $parts = preg_split('/\s+/', $line);
         $finalLine = "[" . $parts[0] . "," . $parts[1] . "," . $parts[2] . "]";
+        //needed to cast as an int since "count()" doesn't convert to int automatically
         $colorCount = (int) $colorCount;
         if ($i == $colorCount - 1)
         {
