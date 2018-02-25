@@ -1,5 +1,7 @@
 const regex = /((\d+\s+\d+\s+\d+)|(\d+.\d+\s+\d+.\d+\s+\d+.\d+))/g;
-const str = `# Converted from MeteoSwiss NCL library
+const str =
+------------------------------------------------------------------------------------------
+`# Converted from MeteoSwiss NCL library
 
 # number of colors in table
 ncolors = 30
@@ -38,6 +40,8 @@ ncolors = 30
  0.9930390 0.78913 0.789134789
  0.8901389 1.1313 0.781378913`;
 let m;
+
+------------------------------------------------------------------------------------------
 
 while ((m = regex.exec(str)) !== null) {
     // This is necessary to avoid infinite loops with zero-width matches
