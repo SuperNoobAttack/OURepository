@@ -44,7 +44,7 @@ function escape_array($array) {
     global $our_db;
 
     $new_array = array();
-    foreach ($array as $item) {
+    /foreach ($array as $item) {
         $new_array[] = $our_db->real_escape_string($item);
     }
     return $new_array;
@@ -55,7 +55,12 @@ if ($request_type == NULL || $request_type == "INDEX") {
     require_once($cwd[__FILE__] . "/mosaics.php");
     display_index($user_id);
 
-} else if ($request_type == "TILE") {
+//} else if ($request_type == "RGB_UPLOAD") {
+//    require_once($cwd[__FILE__] . "/upload.php";
+//    initiate_rgb_upload(); 
+//
+//} 
+else if ($request_type == "TILE") {
     // open the file in a binary mode
     // tiles come as GETs not POSTs
 

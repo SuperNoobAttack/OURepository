@@ -176,16 +176,16 @@ function initialize_mosaics(responseText) {
  				var file = this.files[0];
                 var filename = file.webkitRelativePath || file.fileName || file.name;
 
-                if (!filename.match(/.*.rgb/)) {
-                    display_error_modal("Please only upload a .rgb file here. If you need to upload a mosaic, use the MOSAIC upload button");
+                if (!filename.match(/^[a-zA-Z0-9_-]*$/)) {
+                    display_error_modal("Malformed Filename", "The filename was malformed. Filenames must only contain letters, numbers, dashes ('-'), underscores ('_') and periods.");
                 } else {
                     start_upload(file);
                 }
 			}
         });
 
-        $('#add-rgb-button').click(function(){
-            $('#rgb-file-input').trigger('click');
+        $('#add-mosaic-button').click(function(){
+            $('#mosaic-file-input').trigger('click');
         });
 
         $('#rgb-file-input').change(function(){
@@ -209,6 +209,7 @@ function initialize_mosaics(responseText) {
         });
 
         var rgb_names = [];
+        var rgb_ids = [];
 
         var mosaic_names = [];
         var mosaic_ids = [];

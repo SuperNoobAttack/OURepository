@@ -80,6 +80,13 @@ $query = "CREATE TABLE `tiling_trace` (
 
 query_our_db($query);
 
+$query = "CREATE TABLE `rgb_file` (
+    `rgb_id` INT(11) NOT NULL AUTO_INCREMENT,
+    `rgb_filename` VARCHAR(256) NOT NULL,
+
+    PRIMARY KEY(`rgb_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1";
+
 $query = "CREATE TABLE `users` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`email` VARCHAR(256) NOT NULL,

@@ -126,6 +126,92 @@ function initiate_upload($owner_id) {
     }
 }
 
+//will need to edit this section HEAVILY in order to fit with the 
+//RGB file upload vs. mosaic uploads
+//We are not creating an argument here for now since we don't need
+//to specify which user owns a specific rgb file.
+//function initiate_rgb_upload() {
+//    global $our_db;
+//
+//    $filename = $our_db->real_escape_string($_POST['filename']);
+//    $identifier = $our_db->real_escape_string($_POST['identifier']);
+//    $number_chunks = $our_db->real_escape_string($_POST['number_chunks']);
+//    $size_bytes = $our_db->real_escape_string($_POST['size_bytes']);
+//    $md5_hash = $our_db->real_escape_string($_POST['md5_hash']);
+//
+//    $filename = str_replace(" ", "_", $filename);
+//    if (!preg_match("/^[a-zA-Z0-9_.-]*$/", $filename)) {
+//        //  4. file does exist but with different hash -- error message
+//
+//        error_log("ERROR! malformed filename");
+//        $response['err_title'] = "File Upload Failure";
+//        $response['err_msg'] = "The filename was malformed. Filenames must only contain letters, numbers, dashes ('-'), underscores ('_') and periods.";
+//        echo json_encode($response);
+//        exit(1);
+//    }
+//
+//
+//    //options:
+//    //  1. file does not exist, insert into database -- start upload
+//    //  2. file does exist and has not finished uploading -- restart upload
+//    //  3. file does exist and has finished uploading -- report finished
+//    //  4. file does exist but with different hash -- error message
+//
+//    $query = "SELECT md5_hash, number_chunks, uploaded_chunks, chunk_status, status FROM mosaics WHERE filename = '$filename' AND owner_id = '$owner_id'";
+//    error_log($query);
+//    $result = query_our_db($query);
+//    $row = $result->fetch_assoc();
+//    if ($row == NULL) {
+//        //  1. file does not exist, insert into database -- start upload
+//        $chunk_status = "";
+//        for ($i = 0; $i < $number_chunks; $i++) {
+//            $chunk_status .= '0';
+//        }
+//
+//        $query = "INSERT INTO mosaics SET owner_id = '$owner_id', filename = '$filename', identifier = '$identifier', size_bytes = '$size_bytes', number_chunks = '$number_chunks', md5_hash='$md5_hash', uploaded_chunks = 0, chunk_status = '$chunk_status', status = 'UPLOADING'";
+//        error_log($query);
+//        query_our_db($query);
+//
+//        $response['mosaic_info'] = get_mosaic_info($owner_id, $md5_hash);
+//        $response['html'] = "success!";
+//        echo json_encode($response);
+//
+//    } else {
+//        $db_md5_hash = $row['md5_hash'];
+//
+//        if ($db_md5_hash != $md5_hash) {
+//            //  4. file does exist but with different hash -- error message
+//
+//            error_log("ERROR! file exists with different md5 hash");
+//            $response['err_title'] = "File Upload Failure";
+//            $response['err_msg'] = "A file with the same name has already been uploaded with a different md5_hash (the file names are the same but the contents are different).  Either rename the new file you would like to upload, or delete the already existing file and retry the upload of the new file.";
+//            echo json_encode($response);
+//            exit(1);
+//
+//        } else if ($row['status'] == 'TILING' || $row['status'] == 'TILED') {
+//            //  3. file does exist and has finished uploading -- report finished
+//            //do the same thing, client will handle completion
+//
+//            error_log("ERROR! Final file has already been uploaded.");
+//            $response['err_title'] = "File Already Exists";
+//            $response['err_msg'] = "This file has already been uploaded to the server and does not need to be uploaded again.";
+//            echo json_encode($response);
+//            return false;
+//
+//        } else {
+//            $db_number_chunks = $row['number_chunks'];
+//            $db_uploaded_chunks = $row['uploaded_chunks'];
+//            $db_chunk_status = $row['chunk_status'];
+//
+//            //  2. file does exist and has not finished uploading -- restart upload
+//
+//            $response['mosaic_info'] = get_mosaic_info($owner_id, $md5_hash);
+//            $response['html'] = "success!";
+//            echo json_encode($response);
+//        }
+//    }
+//}
+
 function process_chunk($owner_id) {
     global $our_db;
 
