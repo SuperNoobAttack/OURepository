@@ -176,30 +176,46 @@ function initialize_mosaics(responseText) {
  				var file = this.files[0];
                 var filename = file.webkitRelativePath || file.fileName || file.name;
 
-                if (!filename.match(/.*.rgb/)) {
-                    display_error_modal("Please only upload a .rgb file here. If you need to upload a mosaic, use the MOSAIC upload button");
+                if (!filename.match(/^[a-zA-Z0-9_-]*$/)) {
+                    display_error_modal("Malformed Filename", "The filename was malformed. Filenames must only contain letters, numbers, dashes ('-'), underscores ('_') and periods.");
                 } else {
                     start_upload(file);
                 }
 			}
         });
 
-        $('#add-rgb-button').click(function(){
-            $('#rgb-file-input').trigger('click');
+        $('#add-mosaic-button').click(function(){
+            $('#mosaic-file-input').trigger('click');
         });
 
         $('#rgb-file-input').change(function(){
             //console.log("number files selected: " + $(this).files.length);
             console.log( this.files );
-
             if (this.files.length > 0) {
                 var file = this.files[0];
+                //I think this code is essentially the same as the code above
+                var file_data = $('#rgb-file-input').prop('files')[0]
                 var filename = file.webkitRelativePath || file.fileName || file.name;
 
                 if (!filename.match(/^[a-zA-Z0-9_.-]*$/)) {
                     display_error_modal("Malformed Filename", "The filename was malformed. Filenames must only contain letters, numbers, dashes ('-'), underscores ('_') and periods.");
                 } else {
-                    start_upload(file);
+                    var formData = new FormData();
+                    formData.append('file', file_data);
+                    alert(formData); //just because I guess
+                    $.ajax({
+                        url : 'rgb_script.php',
+                        dataType: 'text',
+                        cache: false,
+                        type : 'POST',
+                        data : formData,
+                        processData: false,  // tell jQuery not to process the data
+                        contentType: false,  // tell jQuery not to set contentType
+                        success : function(data) {
+                            console.log(data);
+                            alert(data);
+                        }
+                    });
                 }
             }
         });
@@ -209,6 +225,7 @@ function initialize_mosaics(responseText) {
         });
 
         var rgb_names = [];
+        var rgb_ids = [];
 
         var mosaic_names = [];
         var mosaic_ids = [];
