@@ -4,7 +4,23 @@
     $dataFilePath = "/home/jlongar/ourepository/www/rgb_script_data/GMT_seis.rgb";
     $jsFileLoc = "/home/jlongar/ourepository/www/js/rgb_scripts/GMT_seis.js";
     $str = file_get_contents($dataFilePath);
-    
+
+        if ( 0 < $_FILES['file']['error'] ) 
+        {
+                echo 'Error: ' . $_FILES['file']['error'] . '<br>';
+        }
+        else 
+        {
+            if(move_uploaded_file($_FILES['file']['tmp_name'], 'uploads/' . $_FILES['file']['name']))
+            {
+                echo "The upload file was moved successfully!!!";
+            }
+            else
+            {
+                echo "The upload file was nove moved.";
+            }
+        }
+
     preg_match_all($re, $str, $matches, PREG_SET_ORDER, 0);
     
     $colorCount = count($matches) . "\n";
