@@ -4,6 +4,16 @@
     $dataFilePath = "/home/jlongar/ourepository/www/rgb_script_data/GMT_seis.rgb";
     $jsFileLoc = "/home/jlongar/ourepository/www/js/rgb_scripts/GMT_seis.js";
     $str = file_get_contents($dataFilePath);
+    $uploaddir = $_SERVER['DOCUMENT_ROOT'] . "/rgb_script_data/" . $_FILES['file']['name'];
+
+    if (is_uploaded_file($_FILES['file']['tmp_name'])) {
+        echo "File ". $_FILES['file']['name'] ." uploaded successfully.\n";
+    } 
+    else 
+    {
+        echo "The following file was not uploaded correctly";
+        echo "filename '". $_FILES['userfile']['tmp_name'] . "'.";
+    }
 
         if ( 0 < $_FILES['file']['error'] ) 
         {
@@ -11,7 +21,7 @@
         }
         else 
         {
-            if(move_uploaded_file($_FILES['file']['tmp_name'], 'uploads/' . $_FILES['file']['name']))
+            if(move_uploaded_file($_FILES['file']['tmp_name'], $uploaddir))
             {
                 echo "The upload file was moved successfully!!!";
             }
