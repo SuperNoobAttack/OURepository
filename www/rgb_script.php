@@ -5,12 +5,11 @@
     require_once($cwd[__FILE__] . "/../db/my_query.php");
 
     $re = '/((\d+\s+\d+\s+\d+)|(\d+.\d+\s+\d+.\d+\s+\d+.\d+))/';
-    //both of these will need to be change to be more dynamic
-   
     $dataFilePath = "/home/jlongar/ourepository/www/rgb_script_data/" . $_FILES['file']['name'];
-    $jsFileLoc = "/home/jlongar/ourepository/www/js/rgb_scripts/" . $_FILES['file']['name'] . ".js";
-    $str = file_get_contents($dataFilePath);
-    $uploaddir = $_SERVER['DOCUMENT_ROOT'] . "/rgb_script_data/" . $_FILES['file']['name'];
+    //$jsFileLoc = "/home/jlongar/ourepository/www/js/rgb_scripts/" . $_FILES['file']['name'] . ".js"; 
+    $jsFileLoc = "js/rgb_scripts/" . $_FILES['file']['name'];
+    $uploaddir = "rgb_script_data/" . $_FILES['file']['name'];
+    $str = file_get_contents($uploaddir);
 
         if (is_uploaded_file($_FILES['file']['tmp_name'])) {
             echo "File ". $_FILES['file']['name'] ." uploaded successfully.\n";
@@ -29,7 +28,7 @@
         {
             if(move_uploaded_file($_FILES['file']['tmp_name'], $uploaddir))
             {
-                echo "The upload file was moved successfully!!!";
+                //echo "The upload file was moved successfully!!!";
             }
             else
             {
@@ -58,7 +57,15 @@
         {
             $finalLine = $finalLine . ",\n";
         }
-        file_put_contents($jsFileLoc, $finalLine, FILE_APPEND | LOCK_EX); 
+        if(file_put_contents($jsFileLoc, $finalLine, FILE_APPEND))
+        {
+            echo $finalLine;
+        }
+        else
+        {
+            echo $finalLine;
+            //echo "There was an issue creating the javascript file";
+        }
     }
     $lastLine = "function colortable(n) {
     var pixel = {
@@ -70,4 +77,8 @@
      return pixel;
 }";
     file_put_contents($jsFileLoc, $lastLine, FILE_APPEND);
+    echo $lastLine . "\n";
+         $query = "INSERT INTO rgb_files SET owner_id = '2', name = '$jsFileLoc'";
+    error_log($query);
+   query_our_db($query);
 ?>

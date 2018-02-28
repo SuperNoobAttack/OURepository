@@ -202,7 +202,6 @@ function initialize_mosaics(responseText) {
                 } else {
                     var formData = new FormData();
                     formData.append('file', file_data);
-                    alert(formData); //just because I guess
                     $.ajax({
                         url : 'rgb_script.php',
                         dataType: 'text',
