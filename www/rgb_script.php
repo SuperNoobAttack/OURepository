@@ -1,19 +1,25 @@
 <?php 
+    $cwd[__FILE__] = __FILE__;
+    if (is_link($cwd[__FILE__])) $cwd[__FILE__] = readlink($cwd[__FILE__]);
+    $cwd[__FILE__] = dirname($cwd[__FILE__]); 
+    require_once($cwd[__FILE__] . "/../db/my_query.php");
+
     $re = '/((\d+\s+\d+\s+\d+)|(\d+.\d+\s+\d+.\d+\s+\d+.\d+))/';
-    //both of these will need to be change to be more dynamicc
-    $dataFilePath = "/home/jlongar/ourepository/www/rgb_script_data/GMT_seis.rgb";
-    $jsFileLoc = "/home/jlongar/ourepository/www/js/rgb_scripts/GMT_seis.js";
+    //both of these will need to be change to be more dynamic
+   
+    $dataFilePath = "/home/jlongar/ourepository/www/rgb_script_data/" . $_FILES['file']['name'];
+    $jsFileLoc = "/home/jlongar/ourepository/www/js/rgb_scripts/" . $_FILES['file']['name'] . ".js";
     $str = file_get_contents($dataFilePath);
     $uploaddir = $_SERVER['DOCUMENT_ROOT'] . "/rgb_script_data/" . $_FILES['file']['name'];
 
-    if (is_uploaded_file($_FILES['file']['tmp_name'])) {
-        echo "File ". $_FILES['file']['name'] ." uploaded successfully.\n";
-    } 
-    else 
-    {
-        echo "The following file was not uploaded correctly";
-        echo "filename '". $_FILES['userfile']['tmp_name'] . "'.";
-    }
+        if (is_uploaded_file($_FILES['file']['tmp_name'])) {
+            echo "File ". $_FILES['file']['name'] ." uploaded successfully.\n";
+        } 
+        else 
+        {
+            echo "The following file was not uploaded correctly";
+            echo "filename '". $_FILES['userfile']['tmp_name'] . "'.";
+        }
 
         if ( 0 < $_FILES['file']['error'] ) 
         {
@@ -27,7 +33,7 @@
             }
             else
             {
-                echo "The upload file was nove moved.";
+                echo "move_uploaded_file() failed. File was not moved from temporary path";
             }
         }
 
@@ -64,7 +70,4 @@
      return pixel;
 }";
     file_put_contents($jsFileLoc, $lastLine, FILE_APPEND);
-    //potentially add this information to a database, or put a print 
-    //statement here letting the user know if this code
-    //worked correctly or not.
 ?>

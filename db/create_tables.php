@@ -11,7 +11,6 @@ if ($drop_tables) {
 	query_our_db("DROP TABLE users");
 	query_our_db("DROP TABLE projects");
     query_our_db("DROP TABLE mosaics");
-    query_our_db("DROP TABLE mosaics");
     query_our_db("DROP TABLE tiling_trace");
     query_our_db("DROP TABLE mosaic_progress");
     query_our_db("DROP TABLE folders");
