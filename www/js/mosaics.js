@@ -1138,6 +1138,10 @@ function initialize_mosaic(responseText) {
          else if (filter == 'TEST') {
             filter_func = OpenSeadragon.Filters.TEST();
         }
+        else if ("#ff0000" != $("#filter-color").val()) {
+            var color = $("#filter-color").val();
+            filter_func = OpenSeadragon.Filters.TEST();
+        }
 
 
         var processors = [];
