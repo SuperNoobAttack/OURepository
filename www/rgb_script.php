@@ -6,8 +6,9 @@
 
     $re = '/((\d+\s+\d+\s+\d+)|(\d+.\d+\s+\d+.\d+\s+\d+.\d+))/';
     $dataFilePath = "/home/jlongar/ourepository/www/rgb_script_data/" . $_FILES['file']['name'];
-    //$jsFileLoc = "/home/jlongar/ourepository/www/js/rgb_scripts/" . $_FILES['file']['name'] . ".js"; 
-    $jsFileLoc = "js/rgb_scripts/" . $_FILES['file']['name'];
+    $jsFileLoc = "/home/jlongar/ourepository/www/js/rgb_scripts/" . $_FILES['file']['name'] . ".js"; 
+    //$jsFileLoc = "js/rgb_scripts/" . $_FILES['file']['name'];
+    $filename = $_FILES['file']['name'];
     $uploaddir = "rgb_script_data/" . $_FILES['file']['name'];
     $str = file_get_contents($uploaddir);
 
@@ -39,46 +40,25 @@
     preg_match_all($re, $str, $matches, PREG_SET_ORDER, 0);
     
     $colorCount = count($matches) . "\n";
-    $jsFileStream = fopen($jsFileLoc, "w");
+    //$jsFileStream = fopen($jsFileLoc, "w");
     $firstLine = "var lookup = [ " . "\n";
-    file_put_contents($jsFileLoc, $firstLine);
+    //file_put_contents($jsFileLoc, $firstLine);
+
+    //I may need to add a value to the "array" function so it compiles
+    $color_val_array = array();
     for($i = 0; $i < $colorCount; $i++)
     {
         $line = $matches[$i][0];
         $parts = preg_split('/\s+/', $line);
-        $finalLine = "[" . $parts[0] . "," . $parts[1] . "," . $parts[2] . "]";
+        $finalLine = $parts[0] . "," . $parts[1] . "," . $parts[2] . "\n";
         //needed to cast as an int since "count()" doesn't convert to int automatically
         $colorCount = (int) $colorCount;
-        if ($i == $colorCount - 1)
-        {
-           $finalLine = $finalLine . "\n ];\n"; 
-        }
-        else
-        {
-            $finalLine = $finalLine . ",\n";
-        }
-        if(file_put_contents($jsFileLoc, $finalLine, FILE_APPEND))
-        {
-            echo $finalLine;
-        }
-        else
-        {
-            echo $finalLine;
-            //echo "There was an issue creating the javascript file";
-        }
+        $otherLine .= $finalLine;
     }
-    $lastLine = "function colortable(n) {
-    var pixel = {
-         r: lookup[n][0],
-         g: lookup[n][1],
-         b: lookup[n][2]
-     };
+    //echo $otherLine;
 
-     return pixel;
-}";
-    file_put_contents($jsFileLoc, $lastLine, FILE_APPEND);
-    echo $lastLine . "\n";
-         $query = "INSERT INTO rgb_files SET owner_id = '2', name = '$jsFileLoc'";
-    error_log($query);
-   query_our_db($query);
+$query = "INSERT INTO rgb_files (owner_id, rgb_file_info, filename) VALUES('5', '$otherLine', '$filename');";
+//$query = "INSERT INTO rgb_files SET owner_id = 3, rgb_file = '$color_val_array', filename = '$filename'";
+error_log($query);
+query_our_db($query);
 ?>

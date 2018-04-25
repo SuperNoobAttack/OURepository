@@ -1134,7 +1134,11 @@ function initialize_mosaic(responseText) {
             filter_func = OpenSeadragon.Filters.VARI();
         } else if (filter == 'TGI') {
             filter_func = OpenSeadragon.Filters.TGI();
+        } 
+         else if (filter == 'TEST') {
+            filter_func = OpenSeadragon.Filters.TEST();
         }
+
 
         var processors = [];
         if (filter_func != null) processors.push(filter_func);

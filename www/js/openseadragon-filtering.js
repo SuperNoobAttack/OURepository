@@ -479,7 +479,28 @@
             };
         },
 
+      
+        TEST: function () {
+            return function(context, callback) {
+                var imgData = context.getImageData(
+                    0, 0, context.canvas.width, context.canvas.height);
+                var pixels = imgData.data;
+                for (var i = 0; i < pixels.length; i += 4) {
+                    var red = pixels[i] / 255.0;
+                    var green = pixels[i + 1] / 255.0;
+                    var blue = pixels[i + 2] / 255.0;
+            //        var tgi = Math.trunc((1.0 + green - 0.39*red - 0.61*blue) * 127.5);
 
+                    pixels[i] = pixels[i] + 40;
+                    //pixels[i + 1] = pixels[i + 1] + 10;
+                    //pixels[i + 2] = pixels[i + 2] + 10; 
+                    //pixels[i + 3] = 255;
+                }
+                context.putImageData(imgData, 0, 0);
+                callback();
+            };
+        },
+    
         //Visible Atmospheric Resistant Index
         //https://agribotix.com/blog/2017/04/30/comparing-rgb-based-vegetation-indices-with-ndvi-for-agricultural-drone-imagery/
         VARI: function () {
