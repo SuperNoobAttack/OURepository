@@ -1112,6 +1112,31 @@ function initialize_mosaic(responseText) {
         }
     });
 
+    //used to 
+    function hexToR(h) { return parseInt((cutHex(h)).substring(0,2),16) }
+    function hexToG(h) { return parseInt((cutHex(h)).substring(2,4),16) }
+    function hexToB(h) { return parseInt((cutHex(h)).substring(4,6),16) }
+    function cutHex(h) { return (h.charAt(0)=="#") ? h.substring(1,7) : h}
+    
+//    function setBgColorById(id,sColor) {
+//     var elem;
+//      if (document.getElementById) {
+//        if (elem=document.getElementById(id)) {
+//           if (elem.style) elem.style.backgroundColor=sColor;
+//           }
+//        }
+//    }    
+
+
+    $("#filter-color").change(function() {
+        var color = $("#filter-color").val();
+        var otherColor = $(this).attr("filter");
+        console.log(color);
+        console.log(otherColor);
+        console.log("Hello there!");
+    });
+
+
     $(".filter-nav").click(function() {
         var filter = $(this).attr("filter");
         console.log("clicked filter nav with filter: '" + filter + "'");
@@ -1119,6 +1144,16 @@ function initialize_mosaic(responseText) {
         $(".filter-nav").removeClass("active");
         $(this).addClass("active");
 
+        ////testing this function:
+        //window.addEventListener("load", startup, false);
+        //function startup() {
+        //    var colorWell = document.querySelector("#filter-color"); 
+        //    var color = $("#filter-color").val();
+        //    colorWell.addEventListener("input", updateFirst, false);
+        //    colorWell.addEventListener("change", updateAll, false);
+        //    colorWell.select();
+        //    console.log(colorWell);
+        //}
 
         if (filter == 'RGB') {
             filter_func = OpenSeadragon.Filters.RGB();
@@ -1138,9 +1173,29 @@ function initialize_mosaic(responseText) {
          else if (filter == 'TEST') {
             filter_func = OpenSeadragon.Filters.TEST();
         }
-        else if ("#ff0000" != $("#filter-color").val()) {
-            var color = $("#filter-color").val();
-            filter_func = OpenSeadragon.Filters.TEST();
+        else if (filter == 'COLOR') {
+            $("#filter_color").change(function(){
+                var color = $(this).val();
+                console.log("We are displaying the image in this color code: " + color);
+                R = hexToR(color);
+                G = hexToG(color);
+                B = hexToB(color);
+                filter_func = OpenSeadragon.Filters.COLOR_PICK(R,G,B);
+
+                var processors = [];
+                if (filter_func != null) processors.push(filter_func);
+                if (kernel_func != null) processors.push(kernel_func);
+
+                if (processors.length > 0) {
+                    viewer.setFilterOptions({
+                        filters : {
+                            processors: processors
+                        },
+                        loadMode: 'sync'
+                    });
+                }
+            });
+            //filter_func = OpenSeadragon.Filters.TEST();
         }
 
 
