@@ -480,7 +480,7 @@
         },
 
       
-        TEST: function () {
+        RGB_FILE: function () {
             return function(context, callback) {
                 var imgData = context.getImageData(
                     0, 0, context.canvas.width, context.canvas.height);
@@ -500,30 +500,7 @@
                 callback();
             };
         },
-   
-
-
-        RGB: function () {
-            return function(context, callback) {
-                var imgData = context.getImageData(
-                    0, 0, context.canvas.width, context.canvas.height);
-                var pixels = imgData.data;
-                for (var i = 0; i < pixels.length; i += 4) {
-                    var red = pixels[i] / 255.0;
-                    var green = pixels[i + 1] / 255.0;
-                    var blue = pixels[i + 2] / 255.0;
-            //        var tgi = Math.trunc((1.0 + green - 0.39*red - 0.61*blue) * 127.5);
-
-                    pixels[i] = pixels[i] + 255;
-                    //pixels[i + 1] = pixels[i + 1] + 10;
-                    //pixels[i + 2] = pixels[i + 2] + 10; 
-                    //pixels[i + 3] = 255;
-                }
-                context.putImageData(imgData, 0, 0);
-                callback();
-            };
-        },
-
+    
         //function used in tandem with the color picker to change the overall color of the  
         COLOR_PICK: function (R,G,B) {
             return function(context, callback) {
