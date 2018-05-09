@@ -303,6 +303,15 @@ if ($request_type == NULL || $request_type == "INDEX") {
     $polygon_id = $our_db->real_escape_string($_POST['polygon_id']);
 
     remove_polygon($user_id, $mosaic_id, $polygon_id);
+
+} else if ($request_type == "UPLOAD_RGB") {
+    require_once($cwd[__FILE__] . "/rgb_script.php");
+
+    $filename = $our_db->real_escape_string($_POST['filename']);
+    $file_data = $our_db->real_escape_string($_POST['file_data']);
+    error_log($filename);
+    error_log($file_data);
+    upload_rgb_file($user_id, $file_data, $filename);
 }
 
 ?>

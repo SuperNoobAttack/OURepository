@@ -34,7 +34,7 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionsDropdown">
                     {{#rgb_file}}
-                    <a filter='{{rgb_file}}' class="filter-nav dropdown-item" href="javascript:void(0)">{{rgb_filename}}</a>
+                    <a filter='RGB_FILE' user_id='{{user}}' class="filter-nav dropdown-item" href="javascript:void(0)">{{rgb_filename}}</a>
                     {{/rgb_file}}
                 </div>
             </li>
@@ -48,7 +48,6 @@
                     <a filter="RGB" class="filter-nav dropdown-item active" href="javascript:void(0)">RGB</a>
                     <a filter="VARI" class="filter-nav dropdown-item" href="javascript:void(0)">VARI</a>
                     <a filter="TGI" class="filter-nav dropdown-item" href="javascript:void(0)">TGI</a>
-                    <a filter="TEST" class="filter-nav dropdown-item" href="javascript:void(0)">TEST</a> 
                     <input type="color" filter="COLOR" id="filter_color" class="filter-nav dropdown-item"  value="#ff0000" style="width:100%;"/>
                     {{#has_nir}}
                     <a filter="NIR" class="filter-nav dropdown-item" href="javascript:void(0)">NIR</a> 

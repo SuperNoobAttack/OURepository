@@ -5,8 +5,8 @@ if (is_link($cwd[__FILE__])) $cwd[__FILE__] = readlink($cwd[__FILE__]);
 $cwd[__FILE__] = dirname($cwd[__FILE__]);
 
 require_once($cwd[__FILE__] . "/../db/my_query.php");
-require_once($cwd[__FILE__] . "/../../Mustache.php/src/Mustache/Autoloader.php");
-Mustache_Autoloader::register();
+//require_once($cwd[__FILE__] . "/../../Mustache.php/src/Mustache/Autoloader.php");
+//Mustache_Autoloader::register();
 
 function create_label($user_id, $mosaic_id, $label_name, $label_type, $label_color) {
     global $our_db, $cwd;
@@ -19,7 +19,7 @@ function create_label($user_id, $mosaic_id, $label_name, $label_type, $label_col
     //check and see if the label already exists
     if ($row != NULL) {
         $response['err_title'] = "Create Label Error";
-        $response['err_msg'] = "Could not create the folder '$label_name' as it already exists for this mosaic.";
+        $response['err_msg'] = "Could not create the label '$label_name' as it already exists for this mosaic.";
         echo json_encode($response);
         return;
     }

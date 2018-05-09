@@ -194,34 +194,50 @@ function initialize_mosaics(responseText) {
             if (this.files.length > 0) {
                 var file = this.files[0];
                 //I think this code is essentially the same as the code above
-                var file_data = $('#rgb-file-input').prop('files')[0]
                 var filename = file.webkitRelativePath || file.fileName || file.name;
+                var file = $('#rgb-file-input').prop('files')[0];
 
-                if (!filename.match(/^[a-zA-Z0-9_.-]*$/)) {
-                    display_error_modal("Malformed Filename", "The filename was malformed. Filenames must only contain letters, numbers, dashes ('-'), underscores ('_') and periods.");
-                } else {
-                    var formData = new FormData();
-                    formData.append('file', file_data);
-                    $.ajax({
-                        url : 'rgb_script.php',
-                        dataType: 'text',
-                        cache: false,
-                        type : 'POST',
-                        data : formData,
-                        processData: false,  // tell jQuery not to process the data
-                        contentType: false,  // tell jQuery not to set contentType
-                        success : function(data) {
-                            console.log(data);
-                            alert(data);
-                        }
-                    });
-                }
+                var file_data = readFile(file, function(e) {
+                    //use result in callback...
+                    var file_data = e.target.result;
+                    
+                    var submission_data = {
+                        request : "UPLOAD_RGB",
+                        id_token : id_token,
+                        file_data : file_data,
+                        filename : filename,
+                    };
+
+                    if (!filename.match(/^[a-zA-Z0-9_.-]*$/)) {
+                        display_error_modal("Malformed Filename", "The filename was malformed. Filenames must only contain letters, numbers, dashes ('-'), underscores ('_') and periods.");
+                    } else {
+                        $.ajax({
+                            url : './request.php',
+                            dataType: 'text',
+                            type : 'POST',
+                            data : submission_data,
+                            success : function(submission_data) {
+                                console.log(submission_data);
+                               // alert(data);
+                            },
+                            error: function(data) {
+                                console.log(data);
+                                alert("We were not able to obtain file data.");
+                            }
+                        });
+                    }
+               });    
             }
         });
 
         $('#add-rgb-button').click(function(){
             $('#rgb-file-input').trigger('click');
         });
+        function readFile(file, onLoadCallback){
+            var reader = new FileReader();
+            reader.onload = onLoadCallback;
+            reader.readAsText(file);
+        }
 
         var rgb_names = [];
         var rgb_ids = [];

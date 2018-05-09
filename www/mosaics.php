@@ -254,6 +254,7 @@ function display_mosaic($user_id, $mosaic_id) {
     $mosaic['no_project'] = true;
     $mosaic['mosaic_name'] = $filename;
 
+    //we are generating labels here
     $mosaic['labels'] = array();
     $query = "SELECT * FROM labels WHERE owner_id = $user_id AND mosaic_id = $mosaic_id";
     $result = query_our_db($query);
