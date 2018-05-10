@@ -236,6 +236,15 @@ function display_mosaic($user_id, $mosaic_id) {
     $height = $mosaic_row['height'];
     $channels = $mosaic_row['channels'];
 
+//    //we are generating .rgb dropdown menu here.
+//    $mosaic['rgb_file'] = array();
+//    $query = "SELECT * FROM rgb_files WHERE owner_id = $user_id;";
+//    $result = query_our_db($query);
+//    while (($row = $result->fetch_assoc()) != NULL) {
+//        $mosaic['rgb_file'][] = $row;
+//        error_log("This is the rgb_file we're printing: $row");
+//    }
+
     error_log("utm zone: " . $mosaic_row['utm_zone']);
     if ($mosaic_row['utm_zone'] != NULL) {
         $mosaic['has_utm'] = true;

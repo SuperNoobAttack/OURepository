@@ -309,8 +309,7 @@ if ($request_type == NULL || $request_type == "INDEX") {
 
     $filename = $our_db->real_escape_string($_POST['filename']);
     $file_data = $our_db->real_escape_string($_POST['file_data']);
-    error_log($filename);
-    error_log($file_data);
+
     upload_rgb_file($user_id, $file_data, $filename);
 }
 
